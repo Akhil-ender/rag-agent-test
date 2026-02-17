@@ -9,7 +9,7 @@ from fastapi.responses import StreamingResponse
 from .agent import Agent
 from .config import Settings, ensure_dirs, get_settings
 from .ingest import Embedder, Ingestor
-from .llm import OpenRouterClient
+from .llm import OpenAIClient
 from .models import ChatRequest, ChatResponse, IngestResponse, SourceChunk
 from .vectorstore import init_vectorstore
 
@@ -32,7 +32,7 @@ def get_vectorstore():
 @lru_cache()
 def get_llm():
     settings = get_settings()
-    return OpenRouterClient(settings.openrouter_api_key, settings.openrouter_model)
+    return OpenAIClient(settings.openai_api_key, settings.openai_model)
 
 
 @lru_cache()
@@ -52,7 +52,7 @@ def deps(settings: Settings = Depends(get_settings)):
         get_embedder(),
         get_llm(),
         get_agent(),
-        Ingestor(settings, vision_api_key=settings.openrouter_api_key, vision_model=settings.openrouter_vision_model),
+        Ingestor(settings, vision_api_key=settings.openai_api_key, vision_model=settings.openai_vision_model),
     )
 
 

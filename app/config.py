@@ -5,9 +5,9 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    openrouter_api_key: str = Field(..., env="OPENROUTER_API_KEY")
-    openrouter_model: str = Field("gpt-4.1", env="OPENROUTER_MODEL")
-    openrouter_vision_model: str = Field("gpt-4.1", env="OPENROUTER_VISION_MODEL")
+    openai_api_key: str = Field(..., env="OPENAI_API_KEY")
+    openai_model: str = Field("gpt-4.1", env="OPENAI_MODEL")
+    openai_vision_model: str = Field("gpt-4o", env="OPENAI_VISION_MODEL")
     embed_model: str = Field("sentence-transformers/all-MiniLM-L6-v2", env="EMBED_MODEL")
     chunk_size: int = Field(800, env="CHUNK_SIZE")
     chunk_overlap: int = Field(120, env="CHUNK_OVERLAP")

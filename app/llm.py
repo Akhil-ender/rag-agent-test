@@ -4,27 +4,22 @@ from typing import Generator, Iterable, List, Optional
 
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
-import requests
-
-OPENROUTER_API_BASE = "https://openrouter.ai/api/v1"
 
 
-class OpenRouterClient:
-    """Wrapper around Langchain ChatOpenAI for OpenRouter integration."""
-    
+class OpenAIClient:
+    """Wrapper around Langchain ChatOpenAI for OpenAI models."""
+
     def __init__(self, api_key: str, model: str) -> None:
         self.api_key = api_key
         self.model = model
         self.client = ChatOpenAI(
             api_key=api_key,
             model=model,
-            base_url=OPENROUTER_API_BASE,
             temperature=0.7,
         )
         self.streaming_client = ChatOpenAI(
             api_key=api_key,
             model=model,
-            base_url=OPENROUTER_API_BASE,
             temperature=0.7,
             streaming=True,
         )
@@ -54,7 +49,7 @@ class OpenRouterClient:
         return lang_messages
     
     def _stream_complete(self, messages: List[BaseMessage], extra: Optional[dict]) -> Generator[str, None, None]:
-        """Stream completion from OpenRouter."""
+        """Stream completion from OpenAI."""
         kwargs = {}
         if extra:
             # Map common params if needed
@@ -68,7 +63,7 @@ class OpenRouterClient:
                 yield chunk.content
     
     def _non_stream_complete(self, messages: List[BaseMessage], extra: Optional[dict]) -> List[str]:
-        """Get non-streaming completion from OpenRouter."""
+        """Get non-streaming completion from OpenAI."""
         kwargs = {}
         if extra:
             if "temperature" in extra:
@@ -81,14 +76,12 @@ class OpenRouterClient:
 
 
 def vision_ocr(image_bytes: bytes, api_key: str, model: str, prompt: str = "Extract text from this image.") -> str:
-    """Extract text from image using OpenRouter vision model."""
+    """Extract text from image using OpenAI vision model."""
     b64 = base64.b64encode(image_bytes).decode("utf-8")
     
-    # Use Langchain ChatOpenAI for vision
     vision_client = ChatOpenAI(
         api_key=api_key,
         model=model,
-        base_url=OPENROUTER_API_BASE,
     )
     
     message = HumanMessage(

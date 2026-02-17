@@ -1,6 +1,6 @@
 # Document/Image QA Agent
 
-FastAPI + LangGraph agent that ingests PDFs or images, indexes with FAISS + local sentence-transformers embeddings, and answers questions using OpenRouter LLMs (GPT-4.1/4o) with optional OCR fallback.
+FastAPI + LangGraph agent that ingests PDFs or images, indexes with FAISS + local sentence-transformers embeddings, and answers questions using OpenAI LLMs (GPT-4.1/4o) with optional OCR fallback.
 
 ## Setup
 
@@ -16,9 +16,9 @@ pip install -r requirements.txt
 
 3) Set environment variables (put in `.env` if you like):
 ```
-OPENROUTER_API_KEY=your_key
-OPENROUTER_MODEL=gpt-4.1
-OPENROUTER_VISION_MODEL=gpt-4o
+OPENAI_API_KEY=your_key
+OPENAI_MODEL=gpt-4.1
+OPENAI_VISION_MODEL=gpt-4o
 EMBED_MODEL=sentence-transformers/all-MiniLM-L6-v2
 CHUNK_SIZE=800
 CHUNK_OVERLAP=120
@@ -37,6 +37,6 @@ uvicorn app.server:app --reload --port 8000
 ## Notes
 - Vectors and metadata stored under `data/faiss_index/`.
 - Uploaded files stored under `data/uploads/`.
-- OCR fallback uses vision LLM; requires OpenRouter key.
+- OCR fallback uses vision LLM; requires OpenAI key.
 - If `poppler` missing, pdf2image OCR fallback may be skipped.
 # rag-agent-test

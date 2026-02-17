@@ -3,7 +3,7 @@ from typing import Any, Callable, Dict, List, Optional
 from langgraph.graph import END, StateGraph
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
 
-from .llm import OpenRouterClient
+from .llm import OpenAIClient
 from .vectorstore import LocalFAISS
 
 
@@ -17,7 +17,7 @@ class GraphState(Dict[str, Any]):
 
 
 class Agent:
-    def __init__(self, llm: OpenRouterClient, vectorstore: LocalFAISS, embedder: Callable[[str], List[float]]) -> None:
+    def __init__(self, llm: OpenAIClient, vectorstore: LocalFAISS, embedder: Callable[[str], List[float]]) -> None:
         self.llm = llm
         self.vectorstore = vectorstore
         self.embedder = embedder
