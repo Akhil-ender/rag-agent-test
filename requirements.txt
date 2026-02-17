@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+langchain
+langchain-openai
+langchain-text-splitters
+langgraph
+sentence-transformers
+faiss-cpu
+pypdf
+pdf2image
+Pillow
+python-multipart
+requests
+pyarrow<19
